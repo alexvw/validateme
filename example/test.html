@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html itemtype="http://schema.org/WebPage" lang="en">
+	<head>
+	
+	<!-- START HEAD INCLUDE -->
+	
+	<!-- Meta header tags. Some of this is just useful, some of this is required for proper display -->
+	<meta charset="utf-8">
+	<meta name="description" content="USDA eDRS">
+	<meta name="keywords" content="USDA, EDRS">
+	<meta name="author" content="avanderwoude">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta id="theViewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="home" href="/">
+	
+	<!-- BOOTSTRAP 3 -->
+	<link rel="stylesheet" type="text/css" href="resources/less/bootstrap.min.css" media="screen">
+	
+	<!-- Open sans font, pretty standard. Infinitely better readability than the default, and its a trivial data load  -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700' rel='stylesheet' type='text/css'>
+	
+	<!-- Local styles (Less Pre-processed). Edit the .less files of identical name, and use a less processor to 
+	automatically generate the css files on save - I use winless (winless.org) to process less into 
+	css & minify, for more info go to lesscss.org -->
+	<link rel="stylesheet" type="text/css" href="resources/less/content-sections.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="resources/less/validateme.css" media="screen">
+	
+	<!-- jQuery. Rest of JS should be at bottom of page, easier to have this here if inline scripts are needed. 
+		can move to bottom later if needed-->
+	<script src="resources/js/common/jquery-2.1.4.min.js"></script>
+	
+	<!-- Optional head scripts for <IE -->
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<!--[if lt IE 8]>
+    	<script src="resources/js/common/json3.js"></script>
+	<![endif]-->
+
+	<!-- END HEAD INCLUDE -->
+	
+	<!-- Server-side variable for page title -->
+	<title>TITLE</title>
+	</head>
+	<body>
+	<br><BR><BR><BR>
+								<!-- begin content include -->
+											<link rel="stylesheet" type="text/css" href="resources/less/bootstrap-datepicker3-standalone.min.css" media="screen">
+											<div class="row">
+												<div class="col-xs-12"><div id="content-detail-data-2" class="row">
+															<div class="col-xs-12">
+																<h4 class="detail-data-header">
+																	ValidateMe Test page
+																</h4>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="lastname" class="required">Last Name:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="text" required id="lastname" data-validateme-type="alphanumeric" data-validateme-min-length="2" class="sm validateme" placeholder="Last"/>
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="firstname" class="required">First Name:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="text" required id="firstname" class="sm validateme" data-validateme-type="alphanumeric" data-validateme-min-length="2" placeholder="First"/>
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="middlei" class="">Middle Initial:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="text" id="middlei" class="sm validateme" 
+																		data-validateme-callback="alert" data-validateme-type="alphanumeric" data-validateme-min-length="1"  placeholder="A"/>
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="suffix" class="">Suffix:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="text" id="suffix" class="sm" placeholder="A"/>
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="phone" class="">Phone number:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="telephone" id="alias" class="sm validateme" 
+																		data-validateme-type="telephone" data-validateme-min-length="1" placeholder="(123) 456-7890" />
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="ssn" class="">SSN:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="text" id="ssn" class="sm validateme" 
+																			data-validateme-type="ssn" data-validateme-callback="alertssn" placeholder="123-45-6789" />
+																			<!-- example script for how to use the validation callback. See the data-validateme-callback parameter above, and the code below -->
+																			<script type="text/javascript">
+																				function alertssn(object){
+																					alert("Please format your SSN like this: 123-45-7890. "+$(object).val() +" is invalid");
+																				}
+																			</script>
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6  right">
+																		<label for="birthdate" class="required">Birth Date:</label>
+																	</div>
+																	<div class="col-xs-6 ">
+																		<div class="input-group date">
+																			<input type="text" id="startdate" class="form-control validateme" data-validateme-type="date" required>
+																			<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i>
+																			</span>
+																		</div>							
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="email" class="required">Email:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="email" id="email" class="sm validateme" data-validateme-type="email" required>
+																	</div>
+																</div>
+															</div>
+														</div>
+												</div>
+											</div>
+
+							<script src="resources/js/common/bootstrap.min.js"></script>
+							<script src="resources/js/common/bootstrap-datepicker.js"></script>
+							<script src="resources/js/common/content-scripts.js"></script>
+							<script src="resources/js/common/validateme.js"></script>
+						
