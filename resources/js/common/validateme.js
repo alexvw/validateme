@@ -79,6 +79,9 @@
 		//check required, check minimum length
 		if (validateValue.length < minLength)
 			return false;
+			
+		if (validateValue === "")
+			return true;
 		
 		if (!$.fn.validateme[validateType](validateValue)){
 			//failed validation
@@ -115,11 +118,48 @@
 		return (numericOnly.match(telephoneRegEx) !== null);
 	};
 	
-	// alphanumeric type. Allows characters and numbers
+	//SSN type
+	//Ignores format, just makes sure there are appropriate 9 digits, ignores dashes or spaces
+	$.fn.validateme.ssn = function(valueString) {
+		var ssnRegEx = /^\d{3}\d{2}\d{4}$/;
+		//pull out others
+		var numericOnly = valueString.replace(/\D/g, "");
+		return (numericOnly.match(ssnRegEx) !== null);
+	};
+	
+	// alphanumeric type. Allows characters and numbers and spaces and dashes
 	$.fn.validateme.alphanumeric = function(valueString) {
 		alphaNumRegEx = /^([a-zA-Z0-9 _-]+)$/;
 		return (alphaNumRegEx.test(valueString));
 	};
+	
+	// numeric type. Allows numbers
+	$.fn.validateme.numeric = function(valueString) {
+		numRegEx = /^([0-9 _-]+)$/;
+		return (numRegEx.test(valueString));
+	};
+	
+	// alpha type. Allows letters and spaces and dashes
+	$.fn.validateme.alpha = function(valueString) {
+		alphaRegEx = /^([a-zA-Z _-]+)$/;
+		return (alphaRegEx.test(valueString));
+	};
+	
+	
+	// date type. looks for MM/DD/YYYY, validates that it is a proper date with javascript core
+	$.fn.validateme.date = function(valueString) {
+	dateRegEx = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20|21)\d{2}$/;
+		if (dateRegEx.test(valueString))
+			return ((new Date(valueString) !== "Invalid Date" && !isNaN(new Date(valueString)) ) ) ? true : false;
+		else return false;
+	};
+	
+	// email type. Looks for local@domain.tld
+	$.fn.validateme.email = function(valueString) {
+	emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	return (emailRegEx.test(valueString));
+	};
+	
 	
  
 }( jQuery ));
