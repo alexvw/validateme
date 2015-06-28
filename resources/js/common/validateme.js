@@ -1,12 +1,10 @@
 (function( $ ) {
  
-    $.fn.validateme = function() {
+    $.fn.validateme = function( options ) {
 	
 		//options
 		//failclass = what class to use for failed validation
-		//callback = what (if any) class to call on this element if it fails validation
 		//when = when to validate. default onchange, can also be now
- 
 		//for each type, perform validation and apply classes as needed
 		//tag types:
 		/*
@@ -20,23 +18,113 @@
 		
 		//also have variables like
 		/*
-		required
-		minimum-length
-		maximum-length
+		min-length
+		callback
 		*/
+		
+		/*
         this.filter( "a" ).each(function() {
             var link = $( this );
             link.append( " (" + link.attr( "href" ) + ")" );
         });
+		*/
+		
+		// This is the easiest way to have default options.
+        var settings = $.extend({
+            // These are the defaults.
+            failClass: "validateme-fail",
+			passClass: "validateme-pass",
+            when: "change"
+        }, options );
+		
+		this.filter( "input" ).each(function() {
+            var toValidate = $( this );
+			
+			//get type of validation
+			var validateType = toValidate.data("validateme-type");
+			
+			// check to see that a function for that type exists. If not, throw console error and return
+			if (typeof $.fn.validateme[validateType] === "function") {
+				//okay, it's safe to use the function
+				//get data-* values
+				var minLength = toValidate.data("validateme-min-length");
+				var callback =  toValidate.data("validateme-callback");
+				
+				//onchange or right now?
+				if (settings.when === "change"){
+				//on change, so set up change handlers
+					toValidate.on( "change", function() {
+						//do this check only on change
+						validate( toValidate, validateType, settings, minLength, callback);
+					});
+				}else if (settings.when === "now"){
+					//I want it validated, and I want it NOW!
+					validate(validateType, toValidate, settings);
+				}
+			}else{
+			console.log("No validation code exists for type "+validateType);
+			}
+			
+        });
  
         return this;
- 
     };
+	
+	//return whether this the input field toValidate is valid according to certain criteria, defined in the data-*
+	function validate(toValidate, validateType, settings, minLength, callback){
+		if (typeof minLength === "undefined")
+			var minLength = 0;
+		
+		var validateValue = toValidate.val();
+		//check required, check minimum length
+		if (validateValue.length < minLength)
+			return false;
+		
+		if (!$.fn.validateme[validateType](validateValue)){
+			//failed validation
+			console.log(validateType + " failed!");
+			toValidate.removeClass(settings.passClass);
+			toValidate.addClass(settings.failClass);
+			//optional callback on failures
+			if (typeof callback !== "undefined"){
+				//callback was defined, call it with the input object as param
+				window[callback](toValidate);
+			}
+		}
+		else{
+			//passed validation
+			console.log(validateType + " passed!");
+			toValidate.removeClass(settings.failClass);
+			toValidate.addClass(settings.passClass);
+		}
+	}
+	
+	/* 
+		validation functions. To add more, just add more objects and they will be dynamically found when classes are assigned
+		Could be private, but this allows overriding if needed
+	* 
+	*/
+	
+	//Telephone type
+	//Ignores format, just makes sure there are appropriate 10 digits
+	//TODO: to internationalize, would need something like google's libphonenumber: github.com/googlei18n/libphonenumber
+	$.fn.validateme.telephone = function(valueString) {
+		var telephoneRegEx = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/;
+		//pull out others
+		var numericOnly = valueString.replace(/\D/g, "");
+		return (numericOnly.match(telephoneRegEx) !== null);
+	};
+	
+	// alphanumeric type. Allows characters and numbers
+	$.fn.validateme.alphanumeric = function(valueString) {
+		alphaNumRegEx = /^([a-zA-Z0-9 _-]+)$/;
+		return (alphaNumRegEx.test(valueString));
+	};
+	
  
 }( jQuery ));
  
-// Usage example:
-$('.validate').validateme();
+
 
 
 /*
@@ -146,3 +234,4 @@ case 'new':
 				break;
 
 */
+
