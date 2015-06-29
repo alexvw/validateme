@@ -22,8 +22,11 @@
             // These are the defaults.
             failClass: "validateme-fail",
 			passClass: "validateme-pass",
-            when: "change"
+            when: "change",
+			finalCallback: null
         }, options );
+		
+		var failed = false;
 		
 		this.filter( "input" ).each(function() {
             var toValidate = $( this );
@@ -47,14 +50,21 @@
 					});
 				}else if (settings.when === "now"){
 					//I want it validated, and I want it NOW!
-					validate(validateType, toValidate, settings);
+					var whereTo = settings.finalCallback;
+					if (!validate( toValidate, validateType, settings, minLength, callback)){
+						failed = true;
+						if (whereTo != null)
+							whereTo.call(this,false);
+						return false;
+					}
 				}
 			}else{
 			console.log("No validation code exists for type "+validateType);
 			}
 			
         });
- 
+		if (settings.when === "now" && !failed)
+			settings.finalCallback.call(this,true);
         return this;
     };
 	
@@ -81,12 +91,14 @@
 				//callback was defined, call it with the input object as param
 				window[callback](toValidate);
 			}
+			return false;
 		}
 		else{
 			//passed validation
 			console.log(validateType + " passed!");
 			toValidate.removeClass(settings.failClass);
 			toValidate.addClass(settings.passClass);
+			return true;
 		}
 	}
 	
@@ -112,7 +124,7 @@
 		var ssnRegEx = /^\d{3}[- ]?\d{2}[ -]?\d{4}$/;
 		//pull out others
 		//var numericOnly = valueString.replace(/\D/g, "");
-		return (ssnRegEx.test(valueString) !== null);
+		return (ssnRegEx.test(valueString));
 	};
 	
 	// alphanumeric type. Allows characters and numbers and spaces and dashes
