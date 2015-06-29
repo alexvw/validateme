@@ -63,7 +63,7 @@
 			}
 			
         });
-		if (settings.when === "now" && !failed)
+		if (settings.when === "now" && !failed && settings.finalCallback != null)
 			settings.finalCallback.call(this,true);
         return this;
     };

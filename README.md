@@ -30,7 +30,7 @@ Or with options:
 	});`
 	
 - **When**: whether you want to validate just right "`now`" or when the field "`change`"es. Defaults to on change.
-- **finalCallback**: only valid when `when = 'now'`, this function will be called with a true/false of whether everything passed validation. Useful for stopping submit on false. When in onchange mode, use css classes for status.
+- **finalCallback**: only valid when `when = 'now'`, this function will be called with a true/false of whether everything passed validation. Useful for stopping submit on false. When in onchange mode, use individual callbacks (see below) or css classes for status
 - **failClass**: override the standard class with your own to be applied to the input on fail
 - **passClass**: same as above, but for pass
 
