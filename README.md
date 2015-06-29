@@ -14,13 +14,15 @@ This library uses html markup (classes and data-* parameters) to establish valid
 - Alpha only
 - Numeric only
 
+The library is set up so that the validation code is dynamically extensible, so adding new validation types is easy to do on your end. Details below.
+
 ## Details:
 
 Initialized via jQuery selector, on whatever input objects you want validated (class "`validateme`" in this case):
 
 `$('.validateme').validateme();`
 
-Or with options:
+Or with options, if you want to override the defaults. 
 
 `$('.validateme').validateme({
 		when: "now",
@@ -29,10 +31,10 @@ Or with options:
 		passClass: "looksOkay"
 	});`
 	
-- **When**: whether you want to validate just right "`now`" or when the field "`change`"es. Defaults to on change.
+- **When**: whether you want to validate right "`now`" or when the field "`change`"es. Defaults to on change. If `now`, the finalCallback will be sent true/false for valid status 
 - **finalCallback**: only valid when `when = 'now'`, this function will be called with a true/false of whether everything passed validation. Useful for stopping submit on false. When in onchange mode, use individual callbacks (see below) or css classes for status
-- **failClass**: override the standard class with your own to be applied to the input on fail
-- **passClass**: same as above, but for pass
+- **failClass**: override the standard class with your own to be applied to the input on fail. Defaults to `validateme-fail`
+- **passClass**: same as above, but for pass defaults to `validateme-pass`
 
 To assign validation, use data-* attributes like this:
 
@@ -49,8 +51,22 @@ To assign validation, use data-* attributes like this:
   - `ssn`
   - `telephone`
   
+##Extending validation types:
+
+The list of validation types is defined only when referenced - so, if you need to add more types, it's easy to do. Just define another function with the same name as the type, and add it to the validateme jQuery object. For example, this is how Date is defined: 
+
+`// date type. looks for MM/DD/YYYY, validates that it is a proper date with javascript core
+	$.fn.validateme.date = function(valueString) {
+	dateRegEx = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20|21)\d{2}$/;
+		if (dateRegEx.test(valueString))
+			return ((new Date(valueString) !== "Invalid Date" && !isNaN(new Date(valueString)) ) ) ? true : false;
+		else return false;
+	};`
+	
+Nowhere are types hardcoded, so adding new functions to the validateme object immediately makes them available as data-validateme-type parameters. Just make sure the function name matches the type, takes in a string, and returns true/false for validity. Also, if you try to validate a type that doesn't exist, it quietly ignores that type rather than erroring.
+  
 ##TODO: 
 - testing, this has only been through very basic testing.
 - optimization/minification
-- expansion of validation types and tags
+- expansion of validation types and tags. Currently works only on input tags.
   
