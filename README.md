@@ -42,7 +42,7 @@ To assign validation, use data-* attributes like this:
 
 - **data-validateme-callback**: this javascript function (global scope only for now) will be called, with the input object as a parameter, whenever this input fails validation. 
 - **data-validateme-min-length**: will fail validation if below this length. Set to 1 to make field required.
-- **data-validateme-validationtype**: the type of validation. Currently includes:
+- **data-validateme-validationtype**: the type of data being validated. Currently includes:
   - `alpha`
   - `numeric`
   - `alphanumeric`
@@ -50,6 +50,15 @@ To assign validation, use data-* attributes like this:
   - `email`
   - `ssn`
   - `telephone`
+- (In Progress) **data-validateme-req-group**: A number or string group that needs at least one member to have non-empty value. For example, if you set `data-validateme-req-group="names"` on three fields, all three would fail validation until at least one had a value.
+
+(In Progress) ###Comparators
+The ability to set a greater-than (gt) parameter on an input, and it would validate only if greater-than a field or value. Same for less-than (lt). Can be combined to create complex ranges of allowed values. Works on dates, numerics, alphanumerics, alphas. Not recommended on email, ssn or telephone fields. Syntax is a little more complex than the rest, but it works like this:
+- **data-validateme-gt-field**: Pass in the id of another input, and it will only validate if the value is greater than the other field
+- **data-validateme-lt-field**: Same as above, but less than.
+- **data-validateme-gt-value**: Same as above, but pass in a hardcoded value rather than a pointer to another field.
+- **data-validateme-lt-value**: Same as above, but less than. 
+  
   
 ##Extending validation types:
 
