@@ -48,41 +48,41 @@
 															<div class="detail-data-row col-xs-12 col-md-6">
 																<div class="row">
 																	<div class="col-xs-6 right">
-																		<label for="lastname" class="required">Last Name:</label>
+																		<label for="alpha" class="required">Alpha:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="text" required id="lastname" data-validateme-type="alpha" data-validateme-min-length="2" class="sm validateme" placeholder="Last"/>
+																		<input type="text" required id="alpha" data-validateme-type="alpha" data-validateme-min-length="2" class="sm validateme" placeholder="Last"/>
 																	</div>
 																</div>
 															</div>
 															<div class="detail-data-row col-xs-12 col-md-6">
 																<div class="row">
 																	<div class="col-xs-6 right">
-																		<label for="firstname" class="required">First Name:</label>
+																		<label for="numeric">Numeric:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="text" required id="firstname" class="sm validateme" data-validateme-type="alpha" data-validateme-min-length="2" placeholder="First"/>
+																		<input type="text" id="numeric" class="sm validateme" data-validateme-type="numeric" placeholder="1234"/>
 																	</div>
 																</div>
 															</div>
 															<div class="detail-data-row col-xs-12 col-md-6">
 																<div class="row">
 																	<div class="col-xs-6 right">
-																		<label for="middlei" class="">Middle Initial:</label>
+																		<label for="alphanum" class="required">Alphanumeric:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="text" id="middlei" class="sm validateme" 
-																		data-validateme-type="alphanumeric" data-validateme-min-length="1"  placeholder="A"/>
+																		<input type="text" id="alphanum" class="sm validateme" 
+																		data-validateme-type="alphanumeric" required data-validateme-min-length="1"  placeholder="1005 Main"/>
 																	</div>
 																</div>
 															</div>
 															<div class="detail-data-row col-xs-12 col-md-6">
 																<div class="row">
 																	<div class="col-xs-6 right">
-																		<label for="suffix" class="">Suffix:</label>
+																		<label for="none" class="">No Validation:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="text" id="suffix" class="sm" placeholder="A"/>
+																		<input type="text" id="none" class="sm" placeholder="A"/>
 																	</div>
 																</div>
 															</div>
@@ -117,11 +117,11 @@
 															<div class="detail-data-row col-xs-12 col-md-6">
 																<div class="row">
 																	<div class="col-xs-6  right">
-																		<label for="birthdate" class="required">Birth Date:</label>
+																		<label for="date" class="required">Date:</label>
 																	</div>
 																	<div class="col-xs-6 ">
 																		<div class="input-group date">
-																			<input type="text" id="startdate" class="form-control validateme" data-validateme-type="date" required>
+																			<input type="text" id="date" class="form-control validateme" data-validateme-type="date" placeholder="01/01/1900">
 																			<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i>
 																			</span>
 																		</div>							
@@ -134,7 +134,19 @@
 																		<label for="email" class="required">Email:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="email" id="email" class="sm validateme" data-validateme-type="email" required>
+																		<input type="email" id="email" class="sm validateme" data-validateme-type="email" placeholder="local@domain.tld">
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="group" class="required">Require Group:</label>
+																	</div>
+																	<div class="col-xs-6">
+																	<p>A OR B</p>
+																		<input type="alpha" id="group1" class="sm validateme" data-validateme-type="alpha" data-validateme-req-group="grouptest" placeholder="A"><br>
+																		<input type="alpha" id="group2" class="sm validateme" data-validateme-type="alpha" data-validateme-req-group="grouptest" placeholder="B">
 																	</div>
 																</div>
 															</div>
@@ -144,6 +156,11 @@
 											<div class="row">
 												<div class="col-xs-6 col-xs-offset-6">
 													<button id="checkInputs" class="btn btn-success"> Validate All </button>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-xs-12">
+													
 												</div>
 											</div>
 

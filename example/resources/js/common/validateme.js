@@ -15,6 +15,11 @@
 		/*
 		min-length
 		callback
+		req-group
+		gt-field
+		gt-value
+		lt-field
+		lt-value
 		*/
 		
 		//default options.
@@ -50,12 +55,9 @@
 					});
 				}else if (settings.when === "now"){
 					//I want it validated, and I want it NOW!
-					var whereTo = settings.finalCallback;
-					if (!validate( toValidate, validateType, settings, minLength, callback)){
+					isValid = validate( toValidate, validateType, settings, minLength, callback);
+					if (!isValid){
 						failed = true;
-						if (whereTo != null)
-							whereTo.call(this,false);
-						return false;
 					}
 				}
 			}else{
@@ -63,8 +65,9 @@
 			}
 			
         });
-		if (settings.when === "now" && !failed && settings.finalCallback != null)
-			settings.finalCallback.call(this,true);
+		
+		if (settings.when === "now" && settings.finalCallback != null)
+			settings.finalCallback.call(this,!failed);
         return this;
     };
 	
@@ -75,31 +78,86 @@
 		
 		var validateValue = toValidate.val();
 		//check required, check minimum length
-		if (validateValue.length < minLength)
+		if (validateValue.length < minLength){
+			console.log(validateType + " failed!");
+			failed(toValidate, settings, callback);
 			return false;
-			
-		if (validateValue === "")
-			return true;
+		}
 		
-		if (!$.fn.validateme[validateType](validateValue)){
+		//require group - at least one of each group must be present
+			//TODO: quicker than 2n^2
+			var reqGroup = toValidate.data("validateme-req-group");
+			if (typeof reqGroup !== "undefined"){
+				//a req-group was defined, check for others
+				//TODO: more than just inputs
+				var toCompare = $("input").filterByData("validateme-req-group", reqGroup);
+				var hasFailed = true;
+				toCompare.each(function() {
+					var alsoInGroup = $( this );
+						if (alsoInGroup.val().length > 0){
+							hasFailed=false;
+						}
+					});
+				toCompare.each(function() {
+					var alsoInGroup = $( this );
+					if (hasFailed){
+						failed(alsoInGroup, settings, callback);
+					}else passed(alsoInGroup, settings, callback);
+							
+					});
+				if (hasFailed)
+					return false;
+			}
+		
+		if (validateValue.length > 0 && !$.fn.validateme[validateType](validateValue)){
 			//failed validation
 			console.log(validateType + " failed!");
-			toValidate.removeClass(settings.passClass);
+			failed(toValidate, settings, callback);
+			return false;
+		}
+		else{				
+			//comparison
+			var gtField = toValidate.data("validateme-gt-field");
+			if (typeof gtField !== "undefined"){
+				//a req-group was defined, check for others
+				//TODO
+			}
+			var gtField = toValidate.data("validateme-gt-field");
+			if (typeof gtField !== "undefined"){
+				//a req-group was defined, check for others
+				//TODO
+			}
+			var gtField = toValidate.data("validateme-gt-field");
+			if (typeof gtField !== "undefined"){
+				//a req-group was defined, check for others
+				//TODO
+			}
+			var gtField = toValidate.data("validateme-gt-field");
+			if (typeof gtField !== "undefined"){
+				//a req-group was defined, check for others
+				//TODO
+			}
+		
+			//passed validation
+			console.log(validateType + " passed!");
+			passed(toValidate, settings);
+			return true;
+		}
+	}
+	
+	function failed(toValidate, settings, callback){
+		toValidate.removeClass(settings.passClass);
 			toValidate.addClass(settings.failClass);
 			//optional callback on failures
 			if (typeof callback !== "undefined"){
 				//callback was defined, call it with the input object as param
 				window[callback](toValidate);
 			}
-			return false;
-		}
-		else{
-			//passed validation
-			console.log(validateType + " passed!");
+	}
+	
+	function passed(toValidate, settings){
 			toValidate.removeClass(settings.failClass);
 			toValidate.addClass(settings.passClass);
-			return true;
-		}
 	}
 	
 	/* 
@@ -148,7 +206,7 @@
 	
 	// date type. looks for MM/DD/YYYY, validates that it is a proper date with javascript core
 	$.fn.validateme.date = function(valueString) {
-	dateRegEx = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20|21)\d{2}$/;
+	dateRegEx = /^(0[1-9]|1[0-2])[ /-](0[1-9]|1\d|2\d|3[01])[ /-](19|20|21)\d{2}$/;
 		if (dateRegEx.test(valueString))
 			return ((new Date(valueString) !== "Invalid Date" && !isNaN(new Date(valueString)) ) ) ? true : false;
 		else return false;
@@ -159,6 +217,14 @@
 	emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	return (emailRegEx.test(valueString));
 	};
+	
+	//filter by data helper to get elements based on data attribute
+	//TODO: is this the most efficient?
+	$.fn.filterByData = function(prop, val) {
+		return this.filter(
+			function() { return $(this).data(prop)==val; }
+		);
+	}
 	
 }( jQuery ));
  
