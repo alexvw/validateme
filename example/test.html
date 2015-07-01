@@ -48,20 +48,20 @@
 															<div class="detail-data-row col-xs-12 col-md-6">
 																<div class="row">
 																	<div class="col-xs-6 right">
-																		<label for="alpha" class="required">Alpha:</label>
+																		<label for="alpha1" class="required">Alpha 1:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="text" required id="alpha" data-validateme-type="alpha" data-validateme-min-length="2" class="sm validateme" placeholder="Last"/>
+																		<input type="text" required id="alpha1" data-validateme-type="alpha" data-validateme-min-length="2" class="sm validateme" placeholder="Last"/>
 																	</div>
 																</div>
 															</div>
 															<div class="detail-data-row col-xs-12 col-md-6">
 																<div class="row">
 																	<div class="col-xs-6 right">
-																		<label for="numeric">Numeric:</label>
+																		<label for="numeric1">Numeric 1:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="text" id="numeric" class="sm validateme" data-validateme-type="numeric" placeholder="1234"/>
+																		<input type="text" id="numeric1" class="sm validateme" data-validateme-type="numeric" placeholder="1234"/>
 																	</div>
 																</div>
 															</div>
@@ -117,11 +117,11 @@
 															<div class="detail-data-row col-xs-12 col-md-6">
 																<div class="row">
 																	<div class="col-xs-6  right">
-																		<label for="date" class="required">Date:</label>
+																		<label for="date1" class="required">Date 1:</label>
 																	</div>
 																	<div class="col-xs-6 ">
 																		<div class="input-group date">
-																			<input type="text" id="date" class="form-control validateme" data-validateme-type="date" placeholder="01/01/1900">
+																			<input type="text" id="date1" class="form-control validateme" data-validateme-type="date" placeholder="01/01/1900">
 																			<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i>
 																			</span>
 																		</div>							
@@ -141,15 +141,109 @@
 															<div class="detail-data-row col-xs-12 col-md-6">
 																<div class="row">
 																	<div class="col-xs-6 right">
-																		<label for="group" class="required">Require Group:</label>
+																		<label for="group" class="required">Require Group A OR B:</label>
 																	</div>
 																	<div class="col-xs-6">
-																	<p>A OR B</p>
 																		<input type="alpha" id="group1" class="sm validateme" data-validateme-type="alpha" data-validateme-req-group="grouptest" placeholder="A"><br>
 																		<input type="alpha" id="group2" class="sm validateme" data-validateme-type="alpha" data-validateme-req-group="grouptest" placeholder="B">
 																	</div>
 																</div>
 															</div>
+															
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="numeric2">More than Numeric 1:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="text" id="numeric2" class="sm validateme" 
+																		data-validateme-type="numeric" placeholder="5678" data-validateme-gte-field="#numeric1"/>
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="numeric2">After Date 1:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<div class="input-group date">
+																				<input type="text" id="date1" class="form-control validateme" 
+																				data-validateme-type="date" placeholder="01/01/1900" data-validateme-gte-field="#date1">
+																				<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i>
+																				</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="numeric2">Before Date 1:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<div class="input-group date">
+																				<input type="text" id="date1" class="form-control validateme" 
+																				data-validateme-type="date" placeholder="01/01/1900" data-validateme-lt-field="#date1">
+																				<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i>
+																				</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="alpha2">Before alpha 1:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="text" id="alpha2" class="sm validateme" 
+																		data-validateme-type="alpha" placeholder="After" data-validateme-lt-field="#alpha1"/>
+																	</div>
+																</div>
+															</div>
+															
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="numeric2">More than 150:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="text" id="numeric2" class="sm validateme" 
+																		data-validateme-type="numeric" placeholder="5678" data-validateme-gte-value="150"/>
+																	</div>
+																</div>
+															</div>
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="numeric2">After 01/01/2000:</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<div class="input-group date">
+																				<input type="text" id="date1" class="form-control validateme" 
+																				data-validateme-type="date" placeholder="01/01/1900" data-validateme-gte-value="01/01/2000">
+																				<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i>
+																				</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															
+															<div class="detail-data-row col-xs-12 col-md-6">
+																<div class="row">
+																	<div class="col-xs-6 right">
+																		<label for="alpha2">Before "g":</label>
+																	</div>
+																	<div class="col-xs-6">
+																		<input type="text" id="alpha2" class="sm validateme" 
+																		data-validateme-type="alpha" placeholder="After" data-validateme-lt-value="g"/>
+																	</div>
+																</div>
+															</div>
+															
+															
 														</div>
 												</div>
 											</div>

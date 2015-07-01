@@ -16,8 +16,8 @@
 		min-length
 		callback
 		req-group
-		gt-field
-		gt-value
+		gte-field
+		gte-value
 		lt-field
 		lt-value
 		*/
@@ -115,27 +115,100 @@
 			failed(toValidate, settings, callback);
 			return false;
 		}
-		else{				
+		else
+		{			
 			//comparison
-			var gtField = toValidate.data("validateme-gt-field");
-			if (typeof gtField !== "undefined"){
-				//a req-group was defined, check for others
-				//TODO
+			var gteField = toValidate.data("validateme-gte-field");
+			if (typeof gteField !== "undefined")
+			{
+				//make sure toValidate is more than field
+				var thisValue = validateValue;
+				var thatValue = $(gteField).val();
+				if (typeof thatValue === "undefined" || thatValue.length < 1)
+				{
+					//if theres nothing to compare to, then we are probably okay
+					console.log("No "+gteField+" to compare "+validateType + " to!");
+					//do nothing for now
+				}
+				else 
+				{
+					var isSmaller = $.fn.validateme[validateType].compare(thisValue, thatValue);
+					if (isSmaller)
+					{
+						console.log(validateType + " failed!");
+						failed(toValidate, settings, callback);
+						return false;
+					}
+				}
 			}
-			var gtField = toValidate.data("validateme-gt-field");
-			if (typeof gtField !== "undefined"){
-				//a req-group was defined, check for others
-				//TODO
+			var ltField = toValidate.data("validateme-lt-field");
+			if (typeof ltField !== "undefined")
+			{
+				//make sure toValidate is more than field
+				var thisValue = validateValue;
+				var thatValue = $(ltField).val();
+				if (typeof thatValue === "undefined" || thatValue.length < 1)
+				{
+					//if theres nothing to compare to, then we are probably okay
+					console.log("No "+ltField+" to compare "+validateType + " to!");
+					//do nothing for now
+				}
+				else 
+				{
+					var isSmaller = $.fn.validateme[validateType].compare(thisValue, thatValue);
+					if (!isSmaller)
+					{
+						console.log(validateType + " failed!");
+						failed(toValidate, settings, callback);
+						return false;
+					}
+				}
 			}
-			var gtField = toValidate.data("validateme-gt-field");
-			if (typeof gtField !== "undefined"){
-				//a req-group was defined, check for others
-				//TODO
+			var gteValue = toValidate.data("validateme-gte-value");
+			if (typeof gteValue !== "undefined")
+			{
+				//make sure toValidate is more than field
+				var thisValue = validateValue;
+				var thatValue = gteValue
+				if (typeof thatValue === "undefined" || thatValue.length < 1)
+				{
+					//if theres nothing to compare to, then we are probably okay
+					console.log("No "+gteValue+" to compare "+validateType + " to!");
+					//do nothing for now
+				}
+				else 
+				{
+					var isSmaller = $.fn.validateme[validateType].compare(thisValue, thatValue);
+					if (isSmaller)
+					{
+						console.log(validateType + " failed!");
+						failed(toValidate, settings, callback);
+						return false;
+					}
+				}
 			}
-			var gtField = toValidate.data("validateme-gt-field");
-			if (typeof gtField !== "undefined"){
-				//a req-group was defined, check for others
-				//TODO
+			var ltValue = toValidate.data("validateme-lt-value");
+			if (typeof ltValue !== "undefined")
+			{
+				//make sure toValidate is more than field
+				var thisValue = validateValue;
+				var thatValue = ltValue
+				if (typeof thatValue === "undefined" || thatValue.length < 1)
+				{
+					//if theres nothing to compare to, then we are probably okay
+					console.log("No "+ltValue+" to compare "+validateType + " to!");
+					//do nothing for now
+				}
+				else 
+				{
+					var isSmaller = $.fn.validateme[validateType].compare(thisValue, thatValue);
+					if (!isSmaller)
+					{
+						console.log(validateType + " failed!");
+						failed(toValidate, settings, callback);
+						return false;
+					}
+				}
 			}
 		
 			//passed validation
@@ -196,11 +269,18 @@
 		numRegEx = /^([0-9 _-]+)$/;
 		return (numRegEx.test(valueString));
 	};
+	// numeric type. Allows numbers
+	$.fn.validateme.numeric.compare = function(a,b) {
+		return (a<b);
+	};
 	
 	// alpha type. Allows letters and spaces and dashes
 	$.fn.validateme.alpha = function(valueString) {
 		alphaRegEx = /^([a-zA-Z _-]+)$/;
 		return (alphaRegEx.test(valueString));
+	};
+	$.fn.validateme.alpha.compare = function(a,b) {
+		return (a<b);
 	};
 	
 	
@@ -210,6 +290,9 @@
 		if (dateRegEx.test(valueString))
 			return ((new Date(valueString) !== "Invalid Date" && !isNaN(new Date(valueString)) ) ) ? true : false;
 		else return false;
+	};
+	$.fn.validateme.date.compare = function(a,b) {
+		return (new Date(a) < new Date(b));  
 	};
 	
 	// email type. Looks for local@domain.tld
