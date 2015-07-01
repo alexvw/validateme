@@ -1,4 +1,4 @@
-# validate-me
+# validateme
 
 Quick jQuery library I whipped up to help with client-side validation.
 
@@ -7,7 +7,7 @@ Quick jQuery library I whipped up to help with client-side validation.
 This library uses html markup (classes and data-* parameters) to establish validation rules for HTML input tags. With the appropriate data-validateme-validationtype parameter, it can validate the following types of data:
 
 - 10 Digit telephone. With or without spaces/parenthesis/dashes
-- Social Security Numbers. 9 Digits, with or without dashes/spaces/parenthesis/dashes
+- Social Security Numbers. 9 Digits, with or without dashes/spaces/parenthesis
 - Dates. MM/DD/YYYY, then validated against javscript's native Date() object to make sure it's a real date
 - Emails. local@domain.tld
 - Alphanumeric only
@@ -54,7 +54,7 @@ To assign validation, use data-* attributes like this:
 
 
 ###Comparators
-The ability to set a greater-than (gt) parameter on an input, and it would validate only if greater-than a field or value. Same for less-than (lt). Can be combined to create complex ranges of allowed values. Works on dates, numerics, alphanumerics, alphas. Not recommended on email, ssn or telephone fields. Syntax is a little more complex than the rest, but it works like this:
+The ability to set a greater-than-or-equal-to (gte) parameter on an input, and it would validate only if gte a field or value. Same for less-than (lt). Can be combined to create complex ranges of allowed values. Works on dates, numerics, alphanumerics, alphas. Not recommended on email, ssn or telephone fields. Syntax is a little more complex than the rest, but it works like this:
 - **data-validateme-gte-field**: Pass in the id of another input, and it will only validate if the value is greater than or equal to the other field
 - **data-validateme-lt-field**: Same as above, but less than.
 - **data-validateme-gte-value**: Same as above, but pass in a hardcoded value rather than a pointer to another field.
