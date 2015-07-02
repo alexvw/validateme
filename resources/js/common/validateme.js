@@ -51,11 +51,11 @@
 				//on change, so set up change handlers
 					toValidate.on( "change", function() {
 						//do this check only on change
-						validate( toValidate, validateType, settings, minLength, callback);
+						$.fn.validateme.validate( toValidate, validateType, settings, minLength, callback);
 					});
 				}else if (settings.when === "now"){
 					//I want it validated, and I want it NOW!
-					isValid = validate( toValidate, validateType, settings, minLength, callback);
+					isValid = $.fn.validateme.validate( toValidate, validateType, settings, minLength, callback);
 					if (!isValid){
 						failed = true;
 					}
@@ -72,7 +72,8 @@
     };
 	
 	//return whether the input field toValidate is valid according to certain criteria, defined in the data-*
-	function validate(toValidate, validateType, settings, minLength, callback){
+	//TODO namespace better
+	$.fn.validateme.validate = function(toValidate, validateType, settings, minLength, callback){
 		if (typeof minLength === "undefined")
 			var minLength = 0;
 		
@@ -80,7 +81,7 @@
 		//check required, check minimum length
 		if (validateValue.length < minLength){
 			console.log(validateType + " failed!");
-			failed(toValidate, settings, callback);
+			$.fn.validateme.failed(toValidate, settings, callback);
 			return false;
 		}
 		
@@ -101,8 +102,8 @@
 				toCompare.each(function() {
 					var alsoInGroup = $( this );
 					if (hasFailed){
-						failed(alsoInGroup, settings, callback);
-					}else passed(alsoInGroup, settings, callback);
+						$.fn.validateme.failed(alsoInGroup, settings, callback);
+					}else $.fn.validateme.passed(alsoInGroup, settings, callback);
 							
 					});
 				if (hasFailed)
@@ -112,7 +113,7 @@
 		if (validateValue.length > 0 && !$.fn.validateme[validateType](validateValue)){
 			//failed validation
 			console.log(validateType + " failed!");
-			failed(toValidate, settings, callback);
+			$.fn.validateme.failed(toValidate, settings, callback);
 			return false;
 		}
 		else
@@ -136,7 +137,7 @@
 					if (isSmaller)
 					{
 						console.log(validateType + " failed!");
-						failed(toValidate, settings, callback);
+						$.fn.validateme.failed(toValidate, settings, callback);
 						return false;
 					}
 				}
@@ -159,7 +160,7 @@
 					if (!isSmaller)
 					{
 						console.log(validateType + " failed!");
-						failed(toValidate, settings, callback);
+						$.fn.validateme.failed(toValidate, settings, callback);
 						return false;
 					}
 				}
@@ -182,7 +183,7 @@
 					if (isSmaller)
 					{
 						console.log(validateType + " failed!");
-						failed(toValidate, settings, callback);
+						$.fn.validateme.failed(toValidate, settings, callback);
 						return false;
 					}
 				}
@@ -205,7 +206,7 @@
 					if (!isSmaller)
 					{
 						console.log(validateType + " failed!");
-						failed(toValidate, settings, callback);
+						$.fn.validateme.failed(toValidate, settings, callback);
 						return false;
 					}
 				}
@@ -213,12 +214,12 @@
 		
 			//passed validation
 			console.log(validateType + " passed!");
-			passed(toValidate, settings);
+			$.fn.validateme.passed(toValidate, settings);
 			return true;
 		}
 	}
 	
-	function failed(toValidate, settings, callback){
+	$.fn.validateme.failed = function(toValidate, settings, callback){
 		toValidate.removeClass(settings.passClass);
 			toValidate.addClass(settings.failClass);
 			//optional callback on failures
@@ -228,7 +229,7 @@
 			}
 	}
 	
-	function passed(toValidate, settings){
+	$.fn.validateme.passed = function(toValidate, settings){
 			toValidate.removeClass(settings.failClass);
 			toValidate.addClass(settings.passClass);
 	}
