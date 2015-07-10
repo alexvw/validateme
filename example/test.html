@@ -51,7 +51,8 @@
 																		<label for="alpha1" class="required">Alpha 1:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="text" required id="alpha1" data-validateme-type="alpha" data-validateme-min-length="2" class="sm validateme" placeholder="Last"/>
+																		<input type="text" required id="alpha1" data-validateme-type="alpha" data-validateme-min-length="2" class="sm validateme" placeholder="Last"
+																		data-validateme-failmessage="Please enter only Alphanumeric characters" />
 																	</div>
 																</div>
 															</div>
@@ -92,7 +93,7 @@
 																		<label for="phone" class="">Phone number:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="telephone" id="alias" class="sm validateme" 
+																		<input type="telephone" id="phone" class="sm validateme" 
 																		data-validateme-type="telephone" data-validateme-min-length="1" placeholder="(123) 456-7890" />
 																	</div>
 																</div>
@@ -103,12 +104,15 @@
 																		<label for="ssn" class="">SSN:</label>
 																	</div>
 																	<div class="col-xs-6">
-																		<input type="text" id="ssn" class="sm validateme" 
-																			data-validateme-type="ssn" data-validateme-callback="alertssn" placeholder="123-45-6789" />
+																		<input type="text" id="ssn" required class="sm validateme" 
+																			data-validateme-type="ssn" data-validateme-callback="checkSsnAndShowMessage"
+																			data-validateme-min-length="1" placeholder="123-45-6789" />
+																			
+																			<div id="ssn-fail" class="validation-error">Please enter a 9-digit SSN</div>
 																			<!-- example script for how to use the validation callback. See the data-validateme-callback parameter above, and the code below -->
 																			<script type="text/javascript">
-																				function alertssn(object){
-																					alert("Please format your SSN like this: '123-45-7890'. '"+$(object).val() +"' is invalid");
+																				function checkSsnAndShowMessage(didPass){
+																					didPass ? $('#ssn-fail').hide() : $('#ssn-fail').show();
 																				}
 																			</script>
 																	</div>
