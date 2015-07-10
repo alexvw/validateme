@@ -214,24 +214,29 @@
 		
 			//passed validation
 			console.log(validateType + " passed!");
-			$.fn.validateme.passed(toValidate, settings);
+			$.fn.validateme.passed(toValidate, settings, callback);
 			return true;
 		}
 	}
 	
 	$.fn.validateme.failed = function(toValidate, settings, callback){
 		toValidate.removeClass(settings.passClass);
-			toValidate.addClass(settings.failClass);
-			//optional callback on failures
-			if (typeof callback !== "undefined"){
-				//callback was defined, call it with the input object as param
-				window[callback](toValidate);
-			}
+		toValidate.addClass(settings.failClass);
+		//optional callback
+		if (typeof callback !== "undefined"){
+			//callback was defined, call it with the input object as param
+			window[callback](false);
+		}
 	}
 	
-	$.fn.validateme.passed = function(toValidate, settings){
+	$.fn.validateme.passed = function(toValidate, settings, callback){
 			toValidate.removeClass(settings.failClass);
 			toValidate.addClass(settings.passClass);
+			//optional callback
+		if (typeof callback !== "undefined"){
+			//callback was defined, call it with the input object as param
+			window[callback](true);
+		}
 	}
 	
 	/* 
