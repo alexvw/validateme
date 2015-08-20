@@ -103,7 +103,11 @@
 					var alsoInGroup = $( this );
 					if (hasFailed){
 						$.fn.validateme.failed(alsoInGroup, settings, callback);
-					}else $.fn.validateme.passed(alsoInGroup, settings, callback);
+					}else {
+						if ( $.fn.validateme[alsoInGroup.data("validateme-type")](alsoInGroup.val()) )
+							$.fn.validateme.passed(alsoInGroup, settings, callback);
+					}
+					
 							
 					});
 				if (hasFailed)
@@ -146,8 +150,10 @@
 					var alsoInGroup = $( this );
 					if (hasFailed){
 						$.fn.validateme.failed(alsoInGroup, settings, callback);
-					}else $.fn.validateme.passed(alsoInGroup, settings, callback);
-							
+					}else {
+						if ( $.fn.validateme[alsoInGroup.data("validateme-type")](alsoInGroup.val()) )
+							$.fn.validateme.passed(alsoInGroup, settings, callback);
+					}		
 				});
 				if (hasFailed)
 					return false;
