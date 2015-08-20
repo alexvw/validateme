@@ -109,6 +109,49 @@
 				if (hasFailed)
 					return false;
 			}
+			
+		//"All or None" group - if any of the inputs in this group have values, ALL must have values
+			//TODO: quicker than 2n^2
+			var allOrNoneGroup = toValidate.data("validateme-allornone-group");
+			if (typeof allOrNoneGroup !== "undefined"){
+				//an allOrNone group was defined, check for others
+				//TODO: more than just inputs
+				var toCompare = $("input").filterByData("validateme-allornone-group", allOrNoneGroup);
+				var hasFailed = false;
+				
+				//if this is empty
+				if (validateValue.length < 1 || validateValue == ""){
+					//it's empty, so make sure the others are too
+					toCompare.each(function() {
+						var alsoInGroup = $( this );
+						if (alsoInGroup.val().length > 0){
+							//uh oh. this is empty, but the other is not. FAIL
+							hasFailed = true;
+						}
+					});
+				}else{
+					//wait, this isn't empty. Let's make sure all of the rest are non-empty too :)
+					//for each in this group, make sure they are non-empty now
+					toCompare.each(function() {
+						var alsoInGroup = $( this );
+						if (alsoInGroup.val().length < 1 || alsoInGroup.val() == ""){
+							//uh oh. this is empty, but the other is not. FAIL
+							hasFailed = true;
+						}
+					});
+				}
+					
+				//appropriately handle states
+				toCompare.each(function() {
+					var alsoInGroup = $( this );
+					if (hasFailed){
+						$.fn.validateme.failed(alsoInGroup, settings, callback);
+					}else $.fn.validateme.passed(alsoInGroup, settings, callback);
+							
+				});
+				if (hasFailed)
+					return false;
+			}
 		
 		if (validateValue.length > 0 && !$.fn.validateme[validateType](validateValue)){
 			//failed validation

@@ -51,6 +51,7 @@ To assign validation, use data-* attributes like this:
   - `ssn`
   - `telephone`
 - **data-validateme-req-group**: A number or string group that needs at least one member to have non-empty value. For example, if you set `data-validateme-req-group="names"` on three fields, all three would fail validation until at least one had a value.
+- **data-validateme-allornone-group**: A number or string group that requires all members to be either empty or non-empty. For example, if there are 4 members of this group, and one becomes non-empty, all members will fail until they all are also non-empty.
 
 
 ###Comparators
