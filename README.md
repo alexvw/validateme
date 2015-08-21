@@ -31,18 +31,18 @@ Or with options, if you want to override the defaults.
 		passClass: "looksOkay"
 	});`
 	
-- **When**: whether you want to validate right "`now`" or when the field "`change`"es. Defaults to on change. If `now`, the finalCallback will be sent true/false for valid status 
-- **finalCallback**: only valid when `when = 'now'`, this function will be called with a true/false of whether everything passed validation. Useful for stopping submit on false. When in onchange mode, use individual callbacks (see below) or css classes for status
-- **failClass**: override the standard class with your own to be applied to the input on fail. Defaults to `validateme-fail`
-- **passClass**: same as above, but for pass defaults to `validateme-pass`
+- **When**: (Optional) whether you want to validate right "`now`" or when the field "`change`"es. Defaults to on change. If `now`, the finalCallback will be sent true/false for valid status 
+- **finalCallback**: (Optional)  only valid when `when = 'now'`, this function will be called with a true/false of whether everything passed validation. Useful for stopping submit on false. When in onchange mode, use individual callbacks (see below) or css classes for status
+- **failClass**: (Optional) override the standard class with your own to be applied to the input on fail. Defaults to `validateme-fail`
+- **passClass**: (Optional) same as above, but for pass defaults to `validateme-pass`
 
 To assign validation, use data-* attributes like this:
 
 `<input type="text" id="middle" class="sm validateme" data-validateme-callback="customFunction" data-validateme-type="alpha" data-validateme-min-length="1"  placeholder="A"/>`
 
-- **data-validateme-callback**: this javascript function (global scope only for now) will be called, with the input object as a parameter, whenever this input fails validation. 
-- **data-validateme-min-length**: will fail validation if below this length. Set to 1 to make field required.
-- **data-validateme-validationtype**: the type of data being validated. Currently includes:
+- **data-validateme-callback**: (Optional) this javascript function (global scope only for now) will be called, with the input object as a parameter, whenever this input fails validation. 
+- **data-validateme-min-length**: (Optional) will fail validation if below this length. Set to 1 to make field required.
+- **data-validateme-validationtype**: (Required) the type of data being validated. Currently includes:
   - `alpha`
   - `numeric`
   - `alphanumeric`
@@ -50,11 +50,11 @@ To assign validation, use data-* attributes like this:
   - `email`
   - `ssn`
   - `telephone`
-- **data-validateme-req-group**: A number or string group that needs at least one member to have non-empty value. For example, if you set `data-validateme-req-group="names"` on three fields, all three would fail validation until at least one had a value.
-- **data-validateme-allornone-group**: A number or string group that requires all members to be either empty or non-empty. For example, if there are 4 members of this group, and one becomes non-empty, all members will fail until they all are also non-empty.
+- **data-validateme-req-group**: (Optional) A number or string group that needs at least one member to have non-empty value. For example, if you set `data-validateme-req-group="names"` on three fields, all three would fail validation until at least one had a value.
+- **data-validateme-allornone-group**: (Optional) A number or string group that requires all members to be either empty or non-empty. For example, if there are 4 members of this group, and one becomes non-empty, all members will fail until they all are also non-empty.
 
 
-###Comparators
+###Comparators  (Optional)
 The ability to set a greater-than-or-equal-to (gte) parameter on an input, and it would validate only if gte a field or value. Same for less-than (lt). Can be combined to create complex ranges of allowed values. Works on dates, numerics, alphanumerics, alphas. Not recommended on email, ssn or telephone fields. Syntax is a little more complex than the rest, but it works like this:
 - **data-validateme-gte-field**: Pass in the id of another input, and it will only validate if the value is greater than or equal to the other field
 - **data-validateme-lt-field**: Same as above, but less than.
@@ -62,7 +62,7 @@ The ability to set a greater-than-or-equal-to (gte) parameter on an input, and i
 - **data-validateme-lt-value**: Same as above, but less than. 
   
   
-##Extending validation types / Overriding Comparators:
+##Extending validation types / Overriding Comparators:  (Optional)
 
 The list of validation types is defined only when referenced - so, if you need to add more types, it's easy to do. Just define another function with the same name as the type, and add it to the validateme jQuery object. For example, this is how Date is defined: 
 

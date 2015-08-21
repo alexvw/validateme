@@ -11,8 +11,9 @@
 		//failclass = what class to use for failed validation
 		//when = when to validate. default onchange, can also be now
 		
-		//also have data options definable as data-* params on the tags themselves
+		//also have data options definable as data-validateme-* params on the tags themselves
 		/*
+		validationtype
 		min-length
 		callback
 		req-group
@@ -20,6 +21,7 @@
 		gte-value
 		lt-field
 		lt-value
+		allornone-group
 		*/
 		
 		//default options.
