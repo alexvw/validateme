@@ -317,13 +317,13 @@
 	
 	// alphanumeric type. Allows characters and numbers and spaces and dashes
 	$.fn.validateme.alphanumeric = function(valueString) {
-		alphaNumRegEx = /^([a-zA-Z0-9 _-]+)$/;
+		alphaNumRegEx = /^([a-zA-Z0-9 ,._-]+)$/;
 		return (alphaNumRegEx.test(valueString));
 	};
 	
 	// numeric type. Allows numbers
 	$.fn.validateme.numeric = function(valueString) {
-		numRegEx = /^([0-9 _-]+)$/;
+		numRegEx = /^([0-9 ,.]+)$/;
 		return (numRegEx.test(valueString));
 	};
 	// numeric type. Allows numbers
@@ -333,7 +333,7 @@
 	
 	// alpha type. Allows letters and spaces and dashes
 	$.fn.validateme.alpha = function(valueString) {
-		alphaRegEx = /^([a-zA-Z _-]+)$/;
+		alphaRegEx = /^([a-zA-Z ,'"_-]+)$/;
 		return (alphaRegEx.test(valueString));
 	};
 	$.fn.validateme.alpha.compare = function(a,b) {
