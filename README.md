@@ -1,3 +1,6 @@
+#This repo and plugin is very old, and no longer maintained
+
+
 # validateme
 
 Quick jQuery library I whipped up to help with client-side validation.
